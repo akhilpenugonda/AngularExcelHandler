@@ -33,7 +33,6 @@ export class SchedulerService {
     {
       this.authService.acquireTokenSilent(environment.OAUTH_SCOPE).subscribe((result) => {
         const accessToken = result.accessToken;
-        console.log("accessToken: " + accessToken);
         sessionStorage.setItem("accessToken", accessToken);
       });
     }
@@ -55,7 +54,6 @@ export class SchedulerService {
         document: {}
       };
       const url =  environment.baseAPIUrl + 'getRecords' ;
-      console.log(body);
       return this.http.post(url, body, this.getHttpOptions()).pipe(
         catchError(error => {
           console.error(error);
@@ -74,7 +72,6 @@ export class SchedulerService {
         document: {}
       };
       const url =  environment.baseAPIUrl + 'updateRecord' ;
-      console.log(body);
       return this.http.post(url, body, this.getHttpOptions()).pipe(
         catchError(error => {
           console.error(error);

@@ -36,7 +36,6 @@ export class ConfigurationComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Inside ConfigurationComponent ngOnInit()');
 
   }
 

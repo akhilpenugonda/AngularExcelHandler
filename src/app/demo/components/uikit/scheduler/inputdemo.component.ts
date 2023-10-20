@@ -111,7 +111,6 @@ onFileUploaded(event: any) {
             return { name: columnName };
           });
           this.sourceColumns = columnList;
-          console.log(columnList);
       };
   }
 }
@@ -131,7 +130,6 @@ onFileUploaded(event: any) {
       const data = groupedDataMap[key];
       groupedData.push(data);
     });
-    console.log(groupedData);
     this.groupedData = groupedData;
     this.generateExcelSheets();
     return groupedData;

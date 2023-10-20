@@ -54,7 +54,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       
       getValueFromSession(key: any) {
         const value = this.sessionService.getValue(key);
-        console.log(value);
         return value;
       }
 
