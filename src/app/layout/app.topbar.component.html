@@ -1,7 +1,7 @@
 <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="">
-        <img src="assets/layout/images/logo.jpeg" alt="logo">
-        <span>Excel Handler</span>
+        <img src="assets/layout/images/excelAI.jpg" alt="logo">
+        <span>Excel Processor</span>
     </a>
 
     <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
@@ -18,8 +18,8 @@
             <span>Dashboard</span>
         </button>
         <button pTooltip="Navigate to Scheduler" tooltipPosition="bottom" class="p-link layout-topbar-button">
-            <i class="pi pi-calendar" [routerLink]="'uikit/scheduler'"></i>
-            <span>Scheduler</span>
+            <i class="pi pi-calendar" [routerLink]="'uikit/excelprocessor'"></i>
+            <span>Excel Upload</span>
         </button>
 
         <button type="text" pTooltip="Logout" tooltipPosition="bottom" (click)="confirm2($event)" 
@@ -28,9 +28,5 @@
         <span>Logout</span>
         </button>
         <p-confirmPopup key="confirm2"></p-confirmPopup>
-        <!-- <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
-            <i class="pi pi-cog"></i>
-            <span>Settings</span>
-        </button> -->
     </div>
 </div>

@@ -1,10 +1,12 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Appointment, Product } from 'src/app/demo/api/product';
 import { DataView } from 'primeng/dataview';
 import { SessionService } from 'src/app/demo/service/session.service';
 import { HelperMethods } from '../../utilities/helpers/helpers';
 import { Table } from 'primeng/table';
+import * as XLSX from 'xlsx';
+
 
 type ProfileType = {
   givenName?: string,
@@ -32,20 +34,26 @@ export class InputDemoComponent implements OnInit, OnChanges {
 
   valSwitch: boolean = false;
 
-  selectedMultiBT: any[] = [];
-
-  selectedMulti: any[] = [];
-
-  appointments: Appointment[] = [];
-
   sortOrder: number = 0;
 
   sortField: string = '';
 
+  uploadedFiles: any[] = [];
+
+  sourceColumns!: Product[];
+
+  targetColumns!: Product[];
+
+  groupedData: any[] = [];
+
   constructor(
+    private messageService: MessageService,
+    private cdr: ChangeDetectorRef
 ) { }
 
   ngOnInit() {
+    this.cdr.markForCheck();
+    this.targetColumns = [];
   }
 
   ngOnChanges() {
@@ -54,8 +62,92 @@ export class InputDemoComponent implements OnInit, OnChanges {
 
   selectedState: any = null;
 
-  compareTwoTimesM() { }
+  tableData:any[] = [];
 
+
+
+  onUpload(event: any) {
+    for (const file of event.files) {
+        this.uploadedFiles.push(file);
+    }
+
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+}
+
+onFileUploaded(event: any) {
+  /* wire up file reader */
+  for (const file of event.files) {
+      this.uploadedFiles.push(file);
+      //     const target: DataTransfer = <DataTransfer>(event.target);
+      // if (target.files.length !== 1) {
+      //   throw new Error('Cannot use multiple files');
+      // }
+      const reader: FileReader = new FileReader();
+      reader.readAsBinaryString(file);
+      reader.onload = (e: any) => {
+          /* create workbook */
+          const binarystr: string = e.target.result;
+          const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
+
+          /* selected the first sheet */
+          const wsname: string = wb.SheetNames[0];
+          const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+          /* save data */
+          //this.tableData = XLSX.utils.sheet_to_json(ws); 
+          const sheetData = XLSX.utils.sheet_to_json(ws);
+          const columnNames = Object.keys(sheetData[0] as any);
+          let id = 1;
+          this.tableData = sheetData.map((data: any) => {
+            const record: any = {};
+            record["id"] = id++;
+            columnNames.forEach((columnName: string) => {
+              record[columnName] = data[columnName];
+            });
+            return record;
+          });
+
+          const columnList = columnNames.map((columnName: string) => {
+            return { name: columnName };
+          });
+          this.sourceColumns = columnList;
+          console.log(columnList);
+      };
+  }
+}
+
+  groupByChoosenColumns(){
+    const groupedData: any[] = [];
+    const groupedDataMap: any = {};
+    this.tableData.forEach((data: any) => {
+      const key = this.targetColumns.map((column: any) => data[column.name]).join("-");
+      if(groupedDataMap[key]){
+        groupedDataMap[key].push(data);
+      }else{
+        groupedDataMap[key] = [data];
+      }
+    });
+    Object.keys(groupedDataMap).forEach((key: string) => {
+      const data = groupedDataMap[key];
+      groupedData.push(data);
+    });
+    console.log(groupedData);
+    this.groupedData = groupedData;
+    this.generateExcelSheets();
+    return groupedData;
+  }
+
+  generateExcelSheets(){
+
+    const wb = XLSX.utils.book_new();
+    
+    this.groupedData.forEach((data: any) => {
+      let sheetName = this.targetColumns.map((column: any) => data[0][column.name]).join("-");
+      const ws = XLSX.utils.json_to_sheet(data);
+      XLSX.utils.book_append_sheet(wb, ws, sheetName);
+    });
+    XLSX.writeFile(wb, 'SheetJS.xlsx');
+  }
   onSortChange(event: any) {
     const value = event.value;
 

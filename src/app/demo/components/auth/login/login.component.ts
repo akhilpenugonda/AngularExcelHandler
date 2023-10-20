@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.router.navigate(['/uikit/scheduler']);
+    this.router.navigate(['/uikit/excelprocessor']);
     // this.authService.loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest)
     //   .subscribe((response: AuthenticationResult) => {
     //     this.authService.instance.setActiveAccount(response.account);

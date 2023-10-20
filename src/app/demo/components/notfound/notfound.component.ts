@@ -12,6 +12,6 @@ export class NotfoundComponent implements OnInit {
     }
     ngOnInit() {
         
-        this.router.navigate(['uikit/scheduler']);
+        this.router.navigate(['uikit/excelprocessor']);
     }
  }

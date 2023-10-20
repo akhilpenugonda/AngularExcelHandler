@@ -1,5 +1,28 @@
 <div class="grid p-fluid">
 	<p-toast></p-toast>
-	
+    <div class="col-12">
+        <div class="card">
+            <h5>Upload Filled Template</h5>
+                <p-fileUpload [customUpload]="true" (uploadHandler)="onFileUploaded($event);"
+                (onUpload)="onUpload($event);" [multiple]="false" accept=".xlsx" [maxFileSize]="10000000">
+                </p-fileUpload>
+            </div>
 
+            <div class="card">        
+                <button class="col-2 mb-2 lg:col-2 lg:mb-0 align-items-center" pButton pRipple label="Generate" (click)="groupByChoosenColumns()"  [disabled]="this.targetColumns.length == 0"></button>
+            </div>
+
+            <div class="card">
+                <p-pickList [source]="sourceColumns" [target]="targetColumns" sourceHeader="Available" targetHeader="Selected" [dragdrop]="true" [responsive]="true"
+                    [sourceStyle]="{ height: '30rem' }" [targetStyle]="{ height: '30rem' }" breakpoint="1400px">
+                    <ng-template let-column pTemplate="item">
+                        <div class="flex flex-wrap p-2 align-items-center gap-3">
+                            <div class="flex-1 flex flex-column gap-2">
+                                <span class="font-bold">{{ column.name }}</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-pickList>
+            </div>
+    </div>    
 </div>

@@ -15,16 +15,16 @@ export class SchedulerService {
     isAdmin: boolean = false;
 
     menuItems: any = [
-      {
-          label: 'Home',
-          items: [
-              { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
-          ]
-      },
+      // {
+      //     label: 'Home',
+      //     items: [
+      //         { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+      //     ]
+      // },
       {
           label: 'Menu',
           items:[
-              { label: 'Scheduler', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/scheduler'] },
+              { label: 'Excel Upload', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/excelprocessor'] },
           ]
       },
   ];

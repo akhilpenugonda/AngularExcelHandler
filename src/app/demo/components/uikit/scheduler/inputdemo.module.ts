@@ -38,9 +38,12 @@ import { MessagesModule } from 'primeng/messages';
 import { TagModule } from 'primeng/tag';
 import { ImageModule } from 'primeng/image';
 import { TableModule } from 'primeng/table';
+import { FileUploadModule } from 'primeng/fileupload';
+
 
 @NgModule({
 	imports: [
+		FileUploadModule,
 		TableModule,
 		ImageModule,
 		TagModule,
