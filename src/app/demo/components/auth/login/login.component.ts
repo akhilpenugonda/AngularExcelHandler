@@ -55,14 +55,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.authService.loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest)
-      .subscribe((response: AuthenticationResult) => {
-        this.authService.instance.setActiveAccount(response.account);
-        console.log(response);
+    this.router.navigate(['/uikit/scheduler']);
+    // this.authService.loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest)
+    //   .subscribe((response: AuthenticationResult) => {
+    //     this.authService.instance.setActiveAccount(response.account);
+    //     console.log(response);
       
-        this.router.navigate(['/uikit/scheduler']);
-          this.setAccessToken();
-      });   
+        
+    //       this.setAccessToken();
+    //   });   
    }
    
   setCache(response: any, isCustom: boolean, customEmail: string)
