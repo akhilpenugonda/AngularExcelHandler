@@ -136,15 +136,14 @@ onFileUploaded(event: any) {
   }
 
   generateExcelSheets(){
-
-    const wb = XLSX.utils.book_new();
-    
+    let wb = XLSX.utils.book_new();
     this.groupedData.forEach((data: any) => {
+      wb = XLSX.utils.book_new();
       let sheetName = this.targetColumns.map((column: any) => data[0][column.name]).join("-");
       const ws = XLSX.utils.json_to_sheet(data);
       XLSX.utils.book_append_sheet(wb, ws, sheetName);
+      XLSX.writeFile(wb, sheetName+ ".xlsx");
     });
-    XLSX.writeFile(wb, 'SheetJS.xlsx');
   }
   onSortChange(event: any) {
     const value = event.value;
