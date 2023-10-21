@@ -33,4 +33,4 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        npx angular-cli-ghpages --dir=dist/AngularExcelHandler
+        npx angular-cli-ghpages
